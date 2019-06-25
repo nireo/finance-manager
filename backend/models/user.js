@@ -10,7 +10,7 @@ const UserSchema = new Schema({
     // since it's really bad plain text passwords
     passwordHash: String,
     monthlySalary: Number,
-    expenses = [
+    expenses: [
         {
             type: Schema.Types.ObjectId,
             ref: 'Expenses'
