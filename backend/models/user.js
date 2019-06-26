@@ -13,7 +13,7 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    // since it's really bad plain text passwords
+    // since it's really bad to store plain text passwords
     passwordHash: {
         type: String,
         required: true
