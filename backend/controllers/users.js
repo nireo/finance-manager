@@ -1,7 +1,6 @@
 // import needed modules
 const express = require("express")
 router = express.Router()
-const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 
 // import user model

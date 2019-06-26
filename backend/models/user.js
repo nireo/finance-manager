@@ -1,6 +1,7 @@
 // import needed dependencies
 const mongoose = require("mongoose"),
-      Schema = mongoose.Schema
+      Schema = mongoose.Schema,
+      uniqueValidator = require("mongoose-unique-validator")
 
 // define schema
 const UserSchema = new Schema({
@@ -11,7 +12,8 @@ const UserSchema = new Schema({
     },
     username: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     // since it's really bad to store plain text passwords
     passwordHash: {
@@ -27,6 +29,8 @@ const UserSchema = new Schema({
     ],
     registerationDate: String,
 })
+
+UserSchema.plugin(uniqueValidator)
 
 // export schema
 module.exports = mongoose.model("User", UserSchema)
