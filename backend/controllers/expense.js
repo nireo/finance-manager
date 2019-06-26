@@ -32,9 +32,17 @@ router.use((err, req, res, next) => {
 })
 
 router.get("/", async (req, res) => {
+    const token = getTokenFrom(req)
     try {
-        const expenses = await Expenses.find({})
-        res.json(expenses.map(expense => expense.toJSON()))
+        const decodedToken = jwt.verify(token, process.env.SECRET)
+        if (!token || !decodedToken.id) {
+            return res.status(401).json({error: 'you need a token to get expenses'})
+        }
+
+        const user = await User.findById(decodedToken.id)
+        const allExpenses = await Expenses.find({byUser: user._id}).populate('user')
+        console.log(allExpenses)
+        res.json(allExpenses.map(expense => expense.toJSON()))
     } catch (e) {
         // if something goes wrong
         console.error(e)
