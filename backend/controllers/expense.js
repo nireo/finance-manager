@@ -26,6 +26,7 @@ router.get("/", async (req, res) => {
         const expenses = await Expenses.find({})
         res.json(expenses.map(expense => expense.toJSON()))
     } catch (e) {
+        // if something goes wrong
         console.error(e)
     }
 })

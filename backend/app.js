@@ -7,9 +7,7 @@ const config = require("./utils/config")
 const userRouter = require("./controllers/users")
 const app = express()
 const expenseRouter = require("./controllers/expense")
-
-app.get('/', (req, res) => res.send('Hello World!'))
-
+const loginRouter = require("./controllers/login")
 
 // display message
 console.log("connecting to mongodb")
@@ -32,5 +30,6 @@ app.use(cors())
 // define other routers
 app.use("/users", userRouter)
 app.use("/expenses", expenseRouter)
+app.use("/login", loginRouter)
 
 module.exports = app

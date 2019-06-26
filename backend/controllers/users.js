@@ -16,6 +16,10 @@ router.use(function timeLog (req, res, next) {
     console.log("Request Type:", req.method)
     // see which url the request goes to
     console.log("Request URL:", req.originalUrl)
+    // since it's pointless to log GET requests since the don't have data
+    if (req.method === "POST") {
+        console.log(req.body)
+    }
     next()
 })
 
@@ -68,7 +72,6 @@ router.post("/", async (req, res, next) => {
         // if a error occurs
         next(e)
     }
-
 })
 
 // export routes

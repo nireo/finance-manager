@@ -4,11 +4,20 @@ const mongoose = require("mongoose"),
 
 // define schema
 const UserSchema = new Schema({
-    name: String,
-    username: String,
-
+    // basic credentials
+    name: {
+        type: String,
+        required: true
+    },
+    username: {
+        type: String,
+        required: true
+    },
     // since it's really bad plain text passwords
-    passwordHash: String,
+    passwordHash: {
+        type: String,
+        required: true
+    },
     monthlySalary: Number,
     expenses: [
         {
