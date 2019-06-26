@@ -1,7 +1,7 @@
 const express = require("express"),
     router = express.Router(),
     Expenses = require("../models/expense"),
-    jwt = require("jsonwebtoken")
+    jwt = require("jsonwebtoken"),
     User = require("../models/user")
 
 const getTokenFrom = request => {
@@ -99,16 +99,11 @@ router.put("/:id", async (req, res, next) => {
                  error: 'token missing or invalid'
             })
         }
-
-        // find the correct exact expense
-        const allExpenses = await Expenses.find({})
-        const exactExpense = await allExpenses.find({ _id: req.params.id })
-        console.log(exactExpense)
+    
         // change the value to the request value
-        exactExpense = {...expense, value: body.value  }
-        console.log(exactExpense)
-        const savedExpense = await exactExpense.save()
-        res.json(savedExpense.toJSON())
+        const newExpense = {...expense, value: body.value  }
+        const changedExpense = await Expenses.findByIdAndUpdate(req.params.id, newExpense, { new: true })
+        res.json(changedExpense.toJSON())
     } catch (e) {
         next(e)
     }

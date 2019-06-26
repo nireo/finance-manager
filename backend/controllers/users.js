@@ -1,7 +1,20 @@
 // import needed modules
-const express = require("express")
-router = express.Router()
-const bcrypt = require("bcrypt")
+const express = require("express"),
+    router = express.Router(),
+    bcrypt = require("bcrypt"),
+    jwt = require("jsonwebtoken")
+
+// implementing this because i want 
+const getTokenFrom = request => {
+    // get the authorization request
+    const authorization = request.get("authorization")
+    if (authorization && authorization.toLowerCase().startsWith("bearer")) {
+        // take the bearer out of the string
+        return authorization.substring(7)
+    }
+    // if the is no authorization or the authorization doesn't start with 'bearer'
+    return null
+}
 
 // import user model
 const User = require("../models/user")
@@ -61,8 +74,10 @@ router.post("/", async (req, res, next) => {
             name: body.name,
             username: body.username,
             passwordHash,
+            // monthly salary will be controlled from the frontend
             monthlySalary: 0,
-            registerationDate: `${time.getHours()}:${time.getMinutes()} ${time.getDate()} ${time.getMonth()} ${time.getFullYear()}`,
+            registerationDate: 
+            `${time.getHours()}:${time.getMinutes()} ${time.getDate()} ${time.getMonth()} ${time.getFullYear()}`,
             expenses: []
         })
         // save user 
@@ -71,6 +86,25 @@ router.post("/", async (req, res, next) => {
         res.json(savedUser)
     } catch (e) {
         // if a error occurs
+        next(e)
+    }
+})
+
+// route for updating monthlySalary
+router.put("/:id", async (req, res, next) => {
+    const body = req.body
+    const token = getTokenFrom(req)
+    try {
+        const decodedToken = jwt.verify(token, process.env.SECRET) 
+        if (!token || !decodedToken.id) {
+            return res.status(401).json({ error: 'token missing or invalid' })
+        }
+        // find the user which needs change
+        const user = await User.findById(decodedToken.id)
+        const newUser = { ...user, monthlySalary:  body.monthlySalary }
+        const changedUser = await User.findByIdAndUpdate(req.params.id, newUser, { new: true })
+        res.json(changedUser.toJSON())
+    } catch (e) {
         next(e)
     }
 })

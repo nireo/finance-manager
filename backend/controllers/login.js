@@ -4,6 +4,22 @@ const express = require("express"),
 const bcrypt = require("bcrypt")
 const User = require("../models/user")
 
+// some basic middleware
+router.use(function timeLog (req, res, next) {
+    const time = new Date
+    // time of request
+    console.log("Time: ", time)
+    // what method e.g. POST, GET; PUT, DELETE
+    console.log("Request Type:", req.method)
+    // see which url the request goes to
+    console.log("Request URL:", req.originalUrl)
+    // since it's pointless to log GET requests since the don't have data
+    if (req.method === "POST") {
+        console.log(req.body)
+    }
+    next()
+})
+
 router.post("/", async (req, res) => {
     // shorten code
     const body = req.body
