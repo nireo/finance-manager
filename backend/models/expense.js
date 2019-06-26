@@ -10,10 +10,11 @@ const ExpenseSchema = new Schema({
     // some random users expenses :)
     byUser: {
         type: Schema.Types.ObjectId,
-        ref: 'Users'
+        ref: 'User'
     },
     // use this just to define if expense is a source of money or use of money
-    profit: Boolean
+    profit: Boolean,
+    time: String
 })
 
 //export schema

@@ -22,7 +22,7 @@ const UserSchema = new Schema({
     expenses: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'Expenses'
+            ref: 'Expense'
         }
     ],
     registerationDate: String,

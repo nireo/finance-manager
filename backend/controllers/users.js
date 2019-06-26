@@ -34,7 +34,7 @@ router.use((err, req, res, next) => {
 router.get("/", async (req, res, next) => {
     try {
         // get all users
-        const users = await User.find({})
+        const users = await User.find({}).populate('expenses')
         // send response which includes all the users in json
         res.json(users.map(user => user.toJSON()))
     } catch (e) {
@@ -53,15 +53,17 @@ router.post("/", async (req, res, next) => {
         // clean up code by not having to type e.g. req.body.name
         const body = req.body
 
+        // hash the password
         const salt = 10
         const passwordHash = await bcrypt.hash(body.password, salt)
 
+        // new user object which is saved to db
         const user = new User({
             name: body.name,
             username: body.username,
             passwordHash,
             monthlySalary: 0,
-            registerationDate: `${time}`,
+            registerationDate: `${time.getHours()}:${time.getMinutes()} ${time.getDate()} ${time.getMonth()} ${time.getFullYear()}`,
             expenses: []
         })
         // save user 
