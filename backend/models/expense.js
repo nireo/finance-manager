@@ -26,7 +26,9 @@ const ExpenseSchema = new Schema({
         type: Boolean,
         required: true
     },
-    time: String
+    time: String,
+    // array for different reminders the user can set
+    reminders: [ String ] 
 })
 
 ExpenseSchema.plugin(uniqueValidator)

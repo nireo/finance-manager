@@ -129,4 +129,31 @@ router.delete("/:id", async (req, res, next) => {
     }
 })
 
+// the reminder route 
+router.post("/:id/reminders", async (req, res, next) => {
+    const token = getTokenFrom(req)
+    // define the reminder from body for cleaner code
+    const { reminder } = req.body
+    // give a status 400 no content if the post request doesn't include a reminder
+    if (!reminder) {
+        return res.status(400).json({ error: 'no content, or wrong content'})
+    }
+    try {
+        const decodedToken = jwt.verify(token, process.env.SECRET)
+        if (!token || !decodedToken.id) {
+            return res.status(401).json({ error: 'token missing or invalid'})
+        }
+        // find the expense that gets a reminder
+        const expense = await Expenses.findById(req.params.id)
+        // add new reminder to the reminder list
+        expense.reminders = expense.reminders.concat(reminder)
+        // after that save the expense with the reminder
+        const withReminder = await expense.save()
+        // return the new expense the program saved
+        res.json(withReminder.toJSON())
+    } catch (e) {
+        next(e)
+    }
+})
+
 module.exports = router
