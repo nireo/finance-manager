@@ -42,17 +42,32 @@ router.use((err, req, res, next) => {
     res.status(500).json({error: 'something went wrong'})
 })
 
-// get route for getting users
+// get route for getting users 
 router.get("/", async (req, res, next) => {
+    // applying token to this aswell since the only person I want to see all users
+    // is the admin user
+    const token = getTokenFrom(req)
     try {
-        // get all users
-        const users = await User.find({}).populate('expenses')
-        // send response which includes all the users in json
-        res.json(users.map(user => user.toJSON()))
+        const decodedToken = jwt.verify(token, process.env.SECRET)
+        if (!token || !decodedToken.id) {
+            return res.status(401).json({error: 'you need a token to get expenses'})
+        }
+        const user = await User.findById(decodedToken.id)
+        if (user.username === 'admin') {
+            // get all users
+            const users = await User.find({}).populate('expenses')
+
+            // dont want to show admin user
+            const withoutAdmin = users.filter(user => user.username !== 'admin')
+
+            // send response which includes all the users in json
+            res.json(users.map(user => user.toJSON()))
+        } else {
+            return res.status(401).json({ error: 'only admin user can see all users'}) 
+        }
     } catch (e) {
         // if anything goes wrong
-        console.error(e)
-        next()
+        next(e)
     }
 })
 
