@@ -1,17 +1,21 @@
 import React from "react"
-import { Button, Form } from 'semantic-ui-react'
+import { Button, Form, Header, Container } from 'semantic-ui-react'
 
 const LoginForm = (props) => (
     <div>
+        <Container text>
+        <Header as="h1">Log-in to your account</Header>
         <Form size="large" onSubmit={props.handleLogin}>
+            
             <Form.Field>
-            <input 
-            placeholder="username" 
-            type="text"
-            value={props.username}
-            onChange={({ target }) => props.setUsername(target.value)}
-            />
+                <input 
+                placeholder="username" 
+                type="text"
+                value={props.username}
+                onChange={({ target }) => props.setUsername(target.value)}
+                />
             </Form.Field>
+
             <Form.Field>
                 <input 
                 placeholder="password"
@@ -22,6 +26,7 @@ const LoginForm = (props) => (
             </Form.Field>
             <Button type="submit">Login</Button>
         </Form>
+        </Container>
     </div>
 )
 
