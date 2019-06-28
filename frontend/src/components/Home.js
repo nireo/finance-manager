@@ -1,5 +1,6 @@
 import React from "react"
 import { Header, Container } from 'semantic-ui-react'
+import Chart from "./Chart"
 
 const Home = () => (
     <Container>
@@ -12,8 +13,16 @@ const Home = () => (
             </p>
             <Header as="h3">Why is keeping good care of finances important?</Header>
             <p>
-                Have you faced problems like: keeping all your finances in a single Excel file, and found it quite troublesome? It's hard to keep track care of your money in a non-user friendly interface like a spreadsheet. Gladly this website provides helpful graphs e.g. pie charts and bar charts.
+                Have you faced problems like: keeping all your finances in a single Excel file, and found it quite troublesome? It's hard to keep track care of your money in a non-user friendly interface like a spreadsheet. Gladly this website provides helpful charts e.g. pie charts, doughnut charts and bar charts.
             </p>
+            <Header as="h3">Examples of a graphs</Header>
+            <Header as="h4">Doughnut chart</Header>
+            <Chart type="doughnut" />
+            <Header as="h4">Pie chart</Header>
+            <Chart type="pie" />
+            <Header as="h4">Bar Chart</Header>
+            <Chart type="bar" />
+
         </Container>
     </Container>
     
