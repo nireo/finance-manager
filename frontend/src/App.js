@@ -1,10 +1,12 @@
 import React, { useState} from 'react';
-import login from './service/login'
+import login from './services/login'
+import LoginForm from './components/LoginForm'
+import { Container } from 'semantic-ui-react'
 
 const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState(null)
 
   const handleLogin = async () => {
     const user = await login.login({username, password})
@@ -14,15 +16,16 @@ const App = () => {
   }
 
   return (
-    <div>
-      <form onSubmit={handleLogin}>
-        <input type="text" value={username} onChange={({ target }) => setUsername(target.value)} />
-        <input type="password" value={password} onChange={({ target }) => setPassword(target.value)} />
-        <button type="submit">login</button>
-      </form>
-      <div>user: {user.name}</div>
-    </div>
+    <Container>
+       <LoginForm 
+        handleLogin={handleLogin}
+        username={username}
+        setUsername={setUsername}
+        password={password}
+        setPassword={setPassword}
+      />
+    </Container>
   )
 }
 
-export default App;
+export default App
