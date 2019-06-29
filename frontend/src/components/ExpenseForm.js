@@ -1,11 +1,11 @@
 import React from "react"
-import { Form, Header } from "semantic-ui-react"
+import { Form, Header, Button } from "semantic-ui-react"
 
-const ExpenseForm = () => {
+const ExpenseForm = (props) => {
     return (
-    <Form>
-    <Form.Group widths='equal'>
+    <Form onSubmit={props.addExpense}>
         <Header as="h3">Basic info</Header>
+    <Form.Group widths='equal'>
       <Form.Input
         fluid
         label='Title'
@@ -23,19 +23,42 @@ const ExpenseForm = () => {
         <Form.Input 
             fluid
             label="Red"
-            placeholder="red"
+			value={props.red}
+			min="0"
+			max="255"
+			type="number"
+			onChange={({ target }) => props.setRed(target.value)}
         />
         <Form.Input 
             fluid
             label="Green"
-            placeholder="green"
+			value={props.green}
+			min="0"
+			max="255"
+			type="number"
+			onChange={({ target }) => props.setGreen(target.value)}
         />
-        <Form.Input 
+        <Form.Input
             fluid
             label="Blue"
-            placeholder="blue"
+			value={props.blue}
+			min="0"
+			max="255"
+			type="number"
+			onChange={({ target }) => props.setBlue(target.value)}
         />
+		<Form.Input 
+			fluid
+			label="Aplha"
+			value={props.alpha}
+			min="0"
+			step="0.1"
+			max="1"
+			type="number"
+			onChange={({ target }) => props.setAlpha(target.value)}
+		/>
     </Form.Group>
+	<Button type="submit">Add expense</Button>
   </Form>)
 }
 

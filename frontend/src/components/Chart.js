@@ -2,6 +2,7 @@ import React from "react"
 import { Doughnut, Pie, Bar } from "react-chartjs-2"
 
 const Chart = (props) => {
+    // example data set for front page
     const exampleChartData = {
         labels: ['Rent', 'Insurance', 'Loans', 'Food', 'Shopping'],
         datasets: [
@@ -23,6 +24,31 @@ const Chart = (props) => {
                 ]
             }
         ]
+    }
+
+    if (props.example === "form") {
+        return (
+        <div>
+            <Doughnut
+                data={
+                    {
+                        labels: ['Custom', 'Black'],
+                        datasets: [
+                            {
+                                data: [
+                                    500,
+                                    500
+                                ],
+                                backgroundColor: [
+                                    `rgba(${props.red}, ${props.green}, ${props.blue}, ${props.aplha})`,
+                                    'rgba(0, 0, 0, 0.5)'
+                                ]
+                            }
+                        ]
+                    }
+                }
+            />
+        </div>)
     }
 
     if (props.type === 'doughnut') {
