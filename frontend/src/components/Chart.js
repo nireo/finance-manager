@@ -20,33 +20,38 @@ const Chart = (props) => {
                     'rgba(54, 162, 235, 0.6)',
                     'rgba(255, 206, 86, 0.6)',
                     'rgba(75, 192, 192, 0.6)',
-                    'rba(153, 102, 255, 0.6)'
+                    'rgba(153, 102, 255, 0.6)'
+                ]
+            }
+        ]
+    }
+    
+
+    let colorPreviewData = {
+        labels: ['Custom', 'Black'],
+        datasets: [
+            {
+                label:"Color showcase",
+                data: [
+                    500,
+                    500
+                ],
+                backgroundColor: [
+                    `rgba(${props.red}, ${props.green}, ${props.blue}, ${props.alpha})`,
+                    'rgba(0, 0, 0, 0.5)'
                 ]
             }
         ]
     }
 
-    if (props.example === "form") {
+    if (props.type=== "form") {
         return (
         <div>
             <Doughnut
-                data={
-                    {
-                        labels: ['Custom', 'Black'],
-                        datasets: [
-                            {
-                                data: [
-                                    500,
-                                    500
-                                ],
-                                backgroundColor: [
-                                    `rgba(${props.red}, ${props.green}, ${props.blue}, ${props.aplha})`,
-                                    'rgba(0, 0, 0, 0.5)'
-                                ]
-                            }
-                        ]
-                    }
-                }
+                data={colorPreviewData}
+                options={{
+                    maintainAspectRatio: false
+                }}
             />
         </div>)
     }

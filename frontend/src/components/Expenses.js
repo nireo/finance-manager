@@ -31,6 +31,7 @@ const Expenses = (props) => {
                 aplha={ alpha } setAlpha= { setAlpha }
                 addExpense={ addExpense }
             />
+            <Chart type="form" alpha={alpha} red={red} green={green} blue={blue} />
         </Container>
 
     )

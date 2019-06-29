@@ -25,6 +25,7 @@ const ExpenseForm = (props) => {
             label="Red"
 			value={props.red}
 			min="0"
+			step="5"
 			max="255"
 			type="number"
 			onChange={({ target }) => props.setRed(target.value)}
@@ -34,6 +35,7 @@ const ExpenseForm = (props) => {
             label="Green"
 			value={props.green}
 			min="0"
+			step="5"
 			max="255"
 			type="number"
 			onChange={({ target }) => props.setGreen(target.value)}
@@ -43,6 +45,7 @@ const ExpenseForm = (props) => {
             label="Blue"
 			value={props.blue}
 			min="0"
+			step="5"
 			max="255"
 			type="number"
 			onChange={({ target }) => props.setBlue(target.value)}
