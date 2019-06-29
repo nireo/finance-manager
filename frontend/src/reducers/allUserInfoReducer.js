@@ -11,14 +11,19 @@ const reducer = (state = null, action) => {
     }
 }
 
-export const setData = (user) => {
+export const setData = () => {
     return async dispatch => {
+        // await for the information about the user | used for expenses
+        const allInfo = await userService.getAll()
+        // make the dispatch call
         dispatch({
-            type: 'SET_DATA'
+            type: 'SET_DATA',
+            data: { allInfo }
         })
     }
 }
 
+// clear the data on logOut
 export const clearData = () => {
     return { type: "CLEAR_DATA" }
 }

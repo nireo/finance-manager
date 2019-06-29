@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import login from './services/login'
 import LoginForm from './components/LoginForm'
 import NavBar from './components/NavBar'
 import Home from './components/Home'
-import userService from "./services/user"
 import { connect } from "react-redux"
+import Expenses from "./components/Expenses"
 import { logIn, alreadyLogged } from "./reducers/userReducer"
 import { Container } from 'semantic-ui-react'
 import {
@@ -48,8 +47,11 @@ const App = (props) => {
 						password={password}
 						setPassword={setPassword}
 					/> :
-					<Redirect to="/"/>
+					<Redirect to="/expenses"/>
 				}/> 
+				<Route exact path="/expenses" render={() => 
+					<Expenses />
+				} />
 			</Container>
 			</Router>
 		</Container>
