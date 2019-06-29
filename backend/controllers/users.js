@@ -53,17 +53,14 @@ router.get("/", async (req, res, next) => {
             return res.status(401).json({error: 'you need a token to get expenses'})
         }
         const user = await User.findById(decodedToken.id)
-        if (user.username === 'admin') {
+        if (user) {
             // get all users
-            const users = await User.find({}).populate('expenses')
-
-            // dont want to show admin user
-            const withoutAdmin = users.filter(user => user.username !== 'admin')
+            const populatedUser = await User.find({username: user.username}).populate('expenses')
 
             // send response which includes all the users in json
-            res.json(users.map(user => user.toJSON()))
+            res.json(populatedUser)
         } else {
-            return res.status(401).json({ error: 'only admin user can see all users'}) 
+            return res.status(401).json({ error: 'user not found or invalid token'}) 
         }
     } catch (e) {
         // if anything goes wrong
