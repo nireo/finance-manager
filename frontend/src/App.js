@@ -1,49 +1,71 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import login from './services/login'
 import LoginForm from './components/LoginForm'
 import NavBar from './components/NavBar'
 import Home from './components/Home'
+import userService from "./services/user"
+import { connect } from "react-redux"
+import { logIn, alreadyLogged } from "./reducers/userReducer"
 import { Container } from 'semantic-ui-react'
 import {
-  BrowserRouter as Router, Route, Link, Redirect, withRouter
+	BrowserRouter as Router, Route, Redirect
 } from "react-router-dom"
 
-const App = () => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [user, setUser] = useState(null)
+const App = (props) => {
+	const [username, setUsername] = useState('')
+	const [password, setPassword] = useState('')
+	const user = props.user
 
-  const handleLogin = async () => {
-    const user = await login.login({username, password})
-    console.log(user)
-    setUser(user)
-    console.log(user)
-  }
+	useEffect(() => {
+		props.alreadyLogged()
+	}, [])
 
-  return (
-    <Container>
-      <Router>
-        <div>
-          <NavBar />
-        </div>
-        <Container style={{ marginTop: '7em' }}>
-        <Route exact path="/" render={() =>
-          <Home />
-        }/>
-        <Route exact path="/login" render={() => 
-          <LoginForm 
-            handleLogin={handleLogin}
-            username={username}
-            setUsername={setUsername}
-            password={password}
-            setPassword={setPassword}
-          />
-        }/> 
-      </Container>
-      </Router>
-       
-    </Container>
-  )
+	const handleLogin = async () => {
+		// make the 2 strings into an object
+		const credentials = {
+			username: username,
+			password: password
+		}
+		props.logIn(credentials)
+	}
+
+	return (
+		<Container>
+			<Router>
+				<div>
+					<NavBar user={user} />
+				</div>
+				<Container style={{ marginTop: '7em' }}>
+				<Route exact path="/" render={() =>
+					<Home />
+				}/>
+				<Route exact path="/login" render={() => 
+					user === null ?
+					<LoginForm 
+						handleLogin={handleLogin}
+						username={username}
+						setUsername={setUsername}
+						password={password}
+						setPassword={setPassword}
+					/> :
+					<Redirect to="/"/>
+				}/> 
+			</Container>
+			</Router>
+		</Container>
+	)
 }
 
-export default App
+const mapStateToProps = (state) => {
+	return {
+		user: state.user
+	}
+}
+
+const mapDispatchToProps = {
+	alreadyLogged,
+	logIn
+}
+
+export default 
+connect(mapStateToProps,mapDispatchToProps)(App)
