@@ -71,7 +71,8 @@ router.post("/", async (req, res, next) => {
             value: body.value,
             time: `${time.getHours()}:${time.getMinutes()} ${time.getDate()} ${time.getMonth()} ${time.getFullYear()}`,
             profit: body.profit,
-            byUser: user._id
+            byUser: user._id,
+            color: body.color
         })
 
         const savedExpense = await expense.save()

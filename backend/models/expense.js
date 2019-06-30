@@ -28,7 +28,12 @@ const ExpenseSchema = new Schema({
     },
     time: String,
     // array for different reminders the user can set
-    reminders: [ String ] 
+    reminders: [ String ],
+    // the color used for the graphs for added customizability
+    color: {
+        type: String,
+        required: true
+    }
 })
 
 ExpenseSchema.plugin(uniqueValidator)
