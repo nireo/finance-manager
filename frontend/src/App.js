@@ -5,6 +5,7 @@ import Home from './components/Home'
 import { connect } from "react-redux"
 import Expenses from "./components/Expenses"
 import { logIn, alreadyLogged } from "./reducers/userReducer"
+import { setData } from "./reducers/allUserInfoReducer"
 import { Container } from 'semantic-ui-react'
 import {
 	BrowserRouter as Router, Route, Redirect
@@ -17,7 +18,10 @@ const App = (props) => {
 
 	useEffect(() => {
 		props.alreadyLogged()
+		props.setData()
 	}, [])
+
+	console.log(props.userData)
 
 	const handleLogin = async () => {
 		// make the 2 strings into an object
@@ -60,13 +64,15 @@ const App = (props) => {
 
 const mapStateToProps = (state) => {
 	return {
-		user: state.user
+		user: state.user,
+		userData: state.userData
 	}
 }
 
 const mapDispatchToProps = {
 	alreadyLogged,
-	logIn
+	logIn,
+	setData
 }
 
 export default 

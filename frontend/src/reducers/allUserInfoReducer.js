@@ -15,6 +15,7 @@ export const setData = () => {
     return async dispatch => {
         // await for the information about the user | used for expenses
         const allInfo = await userService.getAll()
+        console.log(allInfo)
         // make the dispatch call
         dispatch({
             type: 'SET_DATA',

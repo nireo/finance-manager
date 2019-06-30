@@ -25,10 +25,9 @@ const Chart = (props) => {
             }
         ]
     }
-    
 
     let colorPreviewData = {
-        labels: ['Custom', 'Black'],
+        labels: ['Custom', 'Gray'],
         datasets: [
             {
                 label:"Color showcase",

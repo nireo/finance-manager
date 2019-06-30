@@ -10,11 +10,16 @@ const ExpenseForm = (props) => {
         fluid
         label='Title'
         placeholder='title'
+        value={props.title}
+        onChange={({ target }) => props.setTitle(target.value)}
+        type="text"
       />
       <Form.Input
         fluid
         label='Value'
         placeholder='value'
+        value={props.value}
+        onChange={({ target }) => props.setValue(target.value)}
         type="number"
       />
     </Form.Group>
@@ -43,12 +48,12 @@ const ExpenseForm = (props) => {
         <Form.Input
             fluid
             label="Blue"
-			value={props.blue}
-			min="0"
-			step="5"
-			max="255"
-			type="number"
-			onChange={({ target }) => props.setBlue(target.value)}
+            value={props.blue}
+            min="0"
+            step="5"
+            max="255"
+            type="number"
+            onChange={({ target }) => props.setBlue(target.value)}
         />
 		<Form.Input 
 			fluid

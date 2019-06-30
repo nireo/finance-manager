@@ -17,6 +17,7 @@ export const alreadyLogged = () => {
         const userString = localStorage.getItem('loggedUser')
         if (userString) {
             const userJSON = JSON.parse(userString)
+            userService.setToken(userJSON.token)
             dispatch({
                 type: 'LOG_IN',
                 data: { userJSON }
@@ -38,7 +39,6 @@ export const logIn = credentials => {
             'loggedUser', JSON.stringify(userInfo)
         )
         // set token for requesting expenses and outher data
-        console.log(userInfo)
         userService.setToken(userInfo.token)
 
         dispatch({
