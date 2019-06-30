@@ -1,19 +1,18 @@
-import React from "react"
+import React, { useState } from "react"
 import { Form, Header, Button } from "semantic-ui-react"
 
 const ExpenseForm = (props) => {
-    return (
-    <Form onSubmit={props.addExpense}>
-        <Header as="h3">Basic info</Header>
+  		return (
+    	<Form onSubmit={props.addExpense}>
+        	<Header as="h3">Basic info</Header>
     <Form.Group widths='equal'>
-      <Form.Input
-        fluid
-        label='Title'
-        placeholder='title'
-        value={props.title}
-        onChange={({ target }) => props.setTitle(target.value)}
-        type="text"
-      />
+      	<Form.Input
+        	fluid
+        	label='Title'
+       	 	placeholder='title'
+        	value={props.title}
+        	onChange={({ target }) => props.setTitle(target.value)}
+      	/>
       <Form.Input
         fluid
         label='Value'

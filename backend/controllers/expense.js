@@ -21,6 +21,7 @@ router.use(function timeLog (req, res, next) {
     console.log("Request Type:", req.method)
     // see which url the request goes to
     console.log("Request URL:", req.originalUrl)
+    console.log("Request body", req.body)
     next()
 })
 
@@ -69,7 +70,7 @@ router.post("/", async (req, res, next) => {
         const expense = new Expenses({
             title: body.title,
             value: body.value,
-            time: `${time.getHours()}:${time.getMinutes()} ${time.getDate()} ${time.getMonth()} ${time.getFullYear()}`,
+            time: `${time.getHours()}:${time.getMinutes()} ${time.getDate()}.${time.getMonth()}.${time.getFullYear()}`,
             profit: body.profit,
             byUser: user._id,
             color: body.color

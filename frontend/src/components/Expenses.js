@@ -6,6 +6,7 @@ import ExpenseForm from "./ExpenseForm"
 import Chart from "./Chart"
 import InfoCharts from "./InfoCharts"
 import List from "./List"
+import { newExpense, setData } from "../reducers/allUserInfoReducer"
 
 const Expenses = (props) => {
     const [ title, setTitle ] = useState('')
@@ -27,14 +28,7 @@ const Expenses = (props) => {
         } else if (page === 'Charts') {
             return <InfoCharts />
         } else if (page === 'Create') {
-            return <CreateNew />
-        }
-    }
-
-    // component for create new tab
-    const CreateNew = () => {
-        return (
-            <div>
+            return (<div>
                 <Header as="h2">Create new expense</Header>
                 <ExpenseForm 
                     title={ title } setTitle={ setTitle }
@@ -47,12 +41,20 @@ const Expenses = (props) => {
                 />
                 <Header as="h3">Preview of custom color</Header>
                 <Chart type="form" alpha={alpha} red={red} green={green} blue={blue} />
-            </div>
-        )
+            </div>)
+        }
     }
 
     const addExpense = () => {
+        const newObject = {
+            title: title,
+            value: value,
+            profit: false,
+            color: `rgba(${red}, ${green}, ${blue}, ${alpha})`
+        }
 
+        props.newExpense(newObject)
+        
     }
 
     if (props.user === null) {
@@ -87,4 +89,7 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, null)(Expenses)
+const mapDispatchToProps = {
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Expenses)
