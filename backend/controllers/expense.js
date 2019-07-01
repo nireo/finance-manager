@@ -119,8 +119,13 @@ router.delete("/:id", async (req, res, next) => {
         // get the specific expense first since we could call .findByIdAndDelete(),
         // but it will check for the user first
         const expense = await Expenses.findById(req.params.id)
+        console.log(expense)
+        console.log(decodedToken)
         if (expense.byUser.toString() === decodedToken.id) {
+            // remove the expense
             await Expenses.findByIdAndRemove(expense._id )
+            // end the request so it doesn't run forever
+            return response.status(204).end()
         } else {
             return res.status(401).json({
                 error: 'token missing or invalid'

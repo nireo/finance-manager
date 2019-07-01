@@ -8,6 +8,7 @@ const userRouter = require("./controllers/users")
 const app = express()
 const expenseRouter = require("./controllers/expense")
 const loginRouter = require("./controllers/login")
+mongoose.set('useFindAndModify', false);
 
 // display message
 console.log("connecting to mongodb")

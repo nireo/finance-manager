@@ -7,6 +7,7 @@ import Expenses from "./components/Expenses"
 import { logIn, alreadyLogged } from "./reducers/userReducer"
 import { setData } from "./reducers/allUserInfoReducer"
 import { Container } from 'semantic-ui-react'
+import Settings from "./components/Settings"
 import {
 	BrowserRouter as Router, Route, Redirect
 } from "react-router-dom"
@@ -16,12 +17,11 @@ const App = (props) => {
 	const [password, setPassword] = useState('')
 	const user = props.user
 
+	// check for localStorage and get user data like expenses
 	useEffect(() => {
 		props.alreadyLogged()
 		props.setData()
 	}, [])
-
-	console.log(props.userData)
 
 	const handleLogin = async () => {
 		// make the 2 strings into an object
@@ -51,10 +51,13 @@ const App = (props) => {
 						password={password}
 						setPassword={setPassword}
 					/> :
-					<Redirect to="/expenses"/>
+					<Redirect to="/"/>
 				}/> 
 				<Route exact path="/expenses" render={() => 
 					<Expenses />
+				} />
+				<Route exact path="/settings" render={() => 
+					<Settings />
 				} />
 			</Container>
 			</Router>

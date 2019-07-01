@@ -1,16 +1,16 @@
 import React from "react"
-import { Menu, Container, Dropdown } from "semantic-ui-react"
-import { Link } from "react-router-dom"
+import { Menu, Container, Dropdown, Icon } from "semantic-ui-react"
+import { Link  } from "react-router-dom"
 import { connect } from 'react-redux'
 import { logOut } from "../reducers/userReducer"
 
-const NavBar = (props) => (
-    <div>
+const NavBar = (props) => {
+    return (
         <Container>
         <Menu fixed="top" >
             <Container>
                 <Menu.Item as='a' header>
-                    <Link style={{ color: 'black' }}to="/">Finance Manager</Link>
+                    <Link style={{ color: 'black' }}to="/"><Icon name="pie chart" />Finance Manager</Link>
                 </Menu.Item>
                 {(!props.user &&
                     <Menu.Item link>
@@ -34,12 +34,11 @@ const NavBar = (props) => (
                         </Menu.Item>
                     </Menu.Menu>
                 )}
-            
             </Container>
         </Menu>
         </Container>
-    </div>
-)
+    )
+}
 
 const mapDispatchToProps = (state) => {
     return {

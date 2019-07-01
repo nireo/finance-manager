@@ -1,3 +1,5 @@
+// this reducer acidentally turned mostly for expenses, but I don't want to
+// go through the hassle of renaming everything
 import userService from "../services/user"
 
 const reducer = (state = null, action) => {
@@ -6,6 +8,8 @@ const reducer = (state = null, action) => {
             return null
         case 'SET_DATA':
             return action.data
+        case 'NEW_EXPENSE':
+            return [...state.allInfo.expenses, action.data]
         default:
             return state
     }
@@ -20,6 +24,16 @@ export const setData = () => {
         dispatch({
             type: 'SET_DATA',
             data: { allInfo }
+        })
+    }
+}
+
+export const newExpense = newObject => {
+    return async dispatch => {
+        const newExpense = await userService.createExpense(newObject)
+        dispatch({
+            type: 'NEW_EXPENSE',
+            data: { newExpense }
         })
     }
 }

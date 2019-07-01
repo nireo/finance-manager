@@ -106,6 +106,7 @@ router.post("/", async (req, res, next) => {
 router.put("/:id", async (req, res, next) => {
     const body = req.body
     const token = getTokenFrom(req)
+    let newUser = {}
     try {
         const decodedToken = jwt.verify(token, process.env.SECRET) 
         if (!token || !decodedToken.id) {
@@ -113,7 +114,13 @@ router.put("/:id", async (req, res, next) => {
         }
         // find the user which needs change
         const user = await User.findById(decodedToken.id)
-        const newUser = { ...user, monthlySalary:  body.monthlySalary }
+        if (req.body.monthlySalary === undefined) {
+            // 5d126ea99d2ce51e50a9c902
+            newUser = { ...user, username: body.username}
+        } else {
+            newUser = { ...user, monthlySalary:  body.monthlySalary }
+        }
+
         const changedUser = await User.findByIdAndUpdate(req.params.id, newUser, { new: true })
         res.json(changedUser.toJSON())
     } catch (e) {

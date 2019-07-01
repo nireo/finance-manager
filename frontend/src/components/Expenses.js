@@ -6,7 +6,8 @@ import ExpenseForm from "./ExpenseForm"
 import Chart from "./Chart"
 import InfoCharts from "./InfoCharts"
 import List from "./List"
-import { newExpense, setData } from "../reducers/allUserInfoReducer"
+import { newExpense } from "../reducers/allUserInfoReducer"
+import Notification from "./Notification"
 
 const Expenses = (props) => {
     const [ title, setTitle ] = useState('')
@@ -16,6 +17,11 @@ const Expenses = (props) => {
     const [ blue, setBlue ] = useState(0)
     const [ alpha, setAlpha ] = useState(0.1)
     const [ page, setPage ] = useState("List")
+    const [ message, setMessage ] = useState(null)
+    if (props.allUserData === null) {
+        return null
+    } 
+    const expenses = props.allUserData.allInfo[0].expenses
 
     const toPage = (page) => (event) => {
         event.preventDefault()
@@ -46,15 +52,24 @@ const Expenses = (props) => {
     }
 
     const addExpense = () => {
+        // but all values into an object so that sending it is a lot easier
         const newObject = {
             title: title,
             value: value,
             profit: false,
             color: `rgba(${red}, ${green}, ${blue}, ${alpha})`
         }
-
+        // make the call to the backend
         props.newExpense(newObject)
-        
+        setMessage("The new expense can be found in the expense tab")
+        // called a setTimeout since i want to show notification just for 3 seconds
+        setTimeout(() => {
+            setMessage(null)
+        }, 3000)
+    }
+
+    const removeExpense = async id => {
+        const toBeRemovedExpense = await expenses.find(expense => expense._id)
     }
 
     if (props.user === null) {
@@ -64,7 +79,8 @@ const Expenses = (props) => {
 
     return (
         <Container text>
-            <Header as="h1">Welcome {props.user.userJSON.name}</Header>
+            <Notification type="success" message={message} />
+            <Header as="h1">Welcome {props.user.userJSON.name} to the expenses page</Header>
             <p>On this page you can see and edit your expenses. More configuration for this page can be found in the settings tab (navigation bar) or directly <Link to="/settings">here</Link>.</p>
             <div>
                 <Menu pointing secondary>
@@ -81,15 +97,11 @@ const Expenses = (props) => {
     )
 }
 
-
-
 const mapStateToProps = (state) => {
     return {
-        user: state.user
+        user: state.user,
+        allUserData: state.userData
     }
 }
 
-const mapDispatchToProps = {
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Expenses)
+export default connect(mapStateToProps, { newExpense })(Expenses)

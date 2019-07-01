@@ -18,4 +18,22 @@ const getAll = async () => {
     return response.data
 }
 
-export default { getAll, setToken }
+const createExpense = async newObject => {
+    const config = {
+        headers: { Authorization: token }
+    }
+
+    const response = await axios.post("/expenses", newObject, config)
+    return response.data
+}
+
+const deleteExpense = async id => {
+    const config = {
+        headers: {Authorization: token}
+    }
+
+    const response = await axios.delete(`/expenses/${id}`, config)
+    return response.data
+}
+
+export default { getAll, setToken, createExpense, deleteExpense }
