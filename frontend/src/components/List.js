@@ -1,5 +1,5 @@
 import React from "react"
-import { Segment, Button } from "semantic-ui-react"
+import { Segment, Button, Header } from "semantic-ui-react"
 import { connect } from "react-redux"
 
 const List = (props) => {
@@ -13,11 +13,12 @@ const List = (props) => {
         })
         
         return <Segment>
+            
             <Button.Group floated="right">
                 <Button as='a'>Remove</Button>
                 <Button as="a">Edit</Button>
             </Button.Group> 
-            {expense.title} | {expense.value}€ 
+            {expense.title} | {expense.value} € 
             {(expense.reminders.length > 0 && 
             <ul>
                 {allReminders}
@@ -27,6 +28,7 @@ const List = (props) => {
     })
     return (
         <div>
+            <Header as="h2">List of expenses</Header>
             {printExpenses}
         </div>
 

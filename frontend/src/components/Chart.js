@@ -2,8 +2,7 @@ import React from "react"
 import { Doughnut, Pie, Bar } from "react-chartjs-2"
 
 const Chart = (props) => {
-    // example data set for front page
-    const exampleChartData = {
+      const exampleChartData = {
         labels: ['Rent', 'Insurance', 'Loans', 'Food', 'Shopping'],
         datasets: [
             {
@@ -24,7 +23,7 @@ const Chart = (props) => {
                 ]
             }
         ]
-    }
+    }    
 
     let colorPreviewData = {
         labels: ['Custom', 'Gray'],
@@ -43,58 +42,60 @@ const Chart = (props) => {
         ]
     }
 
+    if (props.type === "main-doughnut") {
+        return (
+            <div>
+                <Doughnut data={props.data} options={{ maintainAspectRatio: false }} />
+            </div>
+        )
+    }
+
+    if (props.type === "main-pie") {
+        return (
+            <div>
+                <Doughnut data={props.data} options={{ maintainAspectRatio: false }} />
+            </div>
+        )
+    }
+
+    if (props.type === "main-bar") {
+        return (
+            <div>
+                <Doughnut data={props.data} options={{ maintainAspectRatio: false }} />
+            </div>
+        )
+    }
+
+    if (props.type )
+
     if (props.type=== "form") {
         return (
         <div>
-            <Doughnut
-                data={colorPreviewData}
-                options={{
-                    maintainAspectRatio: false
-                }}
-            />
+            <Doughnut data={colorPreviewData} options={{ maintainAspectRatio: false }} />
         </div>)
     }
-
-    if (props.type === 'doughnut') {
+        if (props.type === 'doughnut') {
         return (
             <div>
-                <Doughnut
-                    data={exampleChartData}
-                    options={{
-                        maintainAspectRatio: false
-                    }}
-                />
-    
+                <Doughnut data={exampleChartData} options={{ maintainAspectRatio: false }}/>
             </div>
         )
     }
     if (props.type === 'pie') {
         return (
             <div>
-                <Pie
-                    data={exampleChartData}
-                    options={{
-                        maintainAspectRatio: false
-                    }}
-                />
-    
+                <Pie data={exampleChartData} options={{ maintainAspectRatio: false }} />
             </div>
         )
     }
     if (props.type === 'bar') {
         return (
             <div>
-                <Bar
-                    data={exampleChartData}
-                    options={{
-                        maintainAspectRatio: false
-                    }}
-                />
-    
+                <Bar data={exampleChartData} options={{maintainAspectRatio: false}}/>
             </div>
         )
     }
-
+   
 }
 
 export default Chart

@@ -17,37 +17,74 @@ const Expenses = (props) => {
     const [ blue, setBlue ] = useState(0)
     const [ alpha, setAlpha ] = useState(0.1)
     const [ page, setPage ] = useState("List")
+    const [ graphPage, setGraphPage ] = useState("Doughnut")
     const [ message, setMessage ] = useState(null)
     if (props.allUserData === null) {
         return null
     } 
     const expenses = props.allUserData.allInfo[0].expenses
+    const allLabels = expenses.map(expense => expense.title)
+    const allValues = expenses.map(expense => expense.value)    
+    const allColors = expenses.map(expense => expense.color)
+
+    const data = {
+        labels: allLabels,
+        datasets: [
+            {
+                label: "Expenses in €",
+                data: allValues,
+                backgroundColor: allColors
+            }
+        ]
+    }
 
     const toPage = (page) => (event) => {
         event.preventDefault()
         setPage(page)
     }
 
+    const toGraphPage = (page) => (event) => {
+        event.preventDefault()
+        setGraphPage(page)
+    }
+
     const renderPageContent = () => {
         if (page === "List") {
             return <List />
         } else if (page === 'Charts') {
-            return <InfoCharts />
+            return (
+                <div>
+                    <Header as="h2">Expenses graph view</Header>
+                    <Menu pointing secondary>
+                        <Menu.Item name="Doughnut" active={graphPage === "Doughnut"} onClick={toGraphPage("Doughnut")} />
+                        <Menu.Item name="Pie" active={graphPage === "Pie"} onClick={toGraphPage("Pie")} />
+                        <Menu.Item name="Bar" active={graphPage === "Bar"} onClick={toGraphPage("Bar")} />
+                    </Menu>
+                    {renderChartContent()}
+                </div>
+            )
         } else if (page === 'Create') {
             return (<div>
                 <Header as="h2">Create new expense</Header>
                 <ExpenseForm 
-                    title={ title } setTitle={ setTitle }
-                    value={ value } setValue={ setValue } 
-                    red={ red } setRed={ setRed }
-                    blue={ blue } setBlue={ setBlue }
-                    green={ green } setGreen={ setGreen }
-                    aplha={ alpha } setAlpha= { setAlpha }
+                    title={ title } setTitle={ setTitle } value={ value } setValue={ setValue } 
+                    red={ red } setRed={ setRed } blue={ blue } setBlue={ setBlue }
+                    green={ green } setGreen={ setGreen } aplha={ alpha } setAlpha= { setAlpha }
                     addExpense={ addExpense }
                 />
                 <Header as="h3">Preview of custom color</Header>
                 <Chart type="form" alpha={alpha} red={red} green={green} blue={blue} />
             </div>)
+        }
+    }
+
+    const renderChartContent = () => {
+        if (graphPage === "Doughnut") {
+            return <Chart type="main-doughnut" data={data} /> 
+        } else if (graphPage === "Pie") {
+            return <Chart type="main-pie" data={data} />
+        } else if (graphPage === "Bar") {
+            return <Chart type="main-bar" data={data} />
         }
     }
 

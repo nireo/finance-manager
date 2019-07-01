@@ -1,12 +1,15 @@
 import React from "react"
 import { Header, Container } from 'semantic-ui-react'
+import ExampleChart from "./ExampleCharts"
 import Chart from "./Chart"
 
 const Home = () => (
     <Container>
         <Container text>
             <Header as='h1'>Finance Manager</Header>
-            <p>In this day and age it's more important than ever to keep good care of your finances. You can become a true money saving machine if you just keep good care and manage finances with the right tools.</p>
+            <p>
+                In this day and age it's more important than ever to keep good care of your finances. You can become a true money saving machine if you just keep good care and manage finances with the right tools.
+            </p>
             <p>
                 Do you track your finances? If not look no further we've got you covered, with this great web finance manager. With a simple user interface and informative graphs.
             </p>
@@ -23,7 +26,6 @@ const Home = () => (
             <Chart type="bar" />
         </Container>
     </Container>
-    
 )
 
 export default Home
