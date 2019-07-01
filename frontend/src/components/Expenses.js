@@ -15,7 +15,7 @@ const Expenses = (props) => {
     const [ red, setRed ] = useState(0)
     const [ green, setGreen ] = useState(0)
     const [ blue, setBlue ] = useState(0)
-    const [ alpha, setAlpha ] = useState(0.1)
+    const [ alpha, setAlpha ] = useState(0)
     const [ page, setPage ] = useState("List")
     const [ graphPage, setGraphPage ] = useState("Doughnut")
     const [ message, setMessage ] = useState(null)
