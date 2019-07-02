@@ -1,5 +1,6 @@
 import loginService from "../services/login"
 import userService from "../services/user"
+import expenseService from "../services/expenseService"
 
 const reducer = (state = null, action) => {
     switch (action.type) {
@@ -18,6 +19,7 @@ export const alreadyLogged = () => {
         if (userString) {
             const userJSON = JSON.parse(userString)
             userService.setToken(userJSON.token)
+            expenseService.setToken(userJSON.token)
             dispatch({
                 type: 'LOG_IN',
                 data: { userJSON }

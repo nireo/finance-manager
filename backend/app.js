@@ -29,8 +29,8 @@ app.use(bodyParser.json())
 app.use(cors())
 
 // define other routers
-app.use("/users", userRouter)
-app.use("/expenses", expenseRouter)
-app.use("/login", loginRouter)
+app.use("/api/users", userRouter)
+app.use("/api/expenses", expenseRouter)
+app.use("/api/login", loginRouter)
 
 module.exports = app

@@ -5,6 +5,7 @@ import Home from './components/Home'
 import { connect } from "react-redux"
 import Expenses from "./components/Expenses"
 import { logIn, alreadyLogged } from "./reducers/userReducer"
+import { setExpenses } from "./reducers/expenseReducer"
 import { setData } from "./reducers/allUserInfoReducer"
 import { Container } from 'semantic-ui-react'
 import Settings from "./components/Settings"
@@ -17,10 +18,13 @@ const App = (props) => {
 	const [password, setPassword] = useState('')
 	const user = props.user
 
-	// check for localStorage and get user data like expenses
 	useEffect(() => {
+		// first check if localStorage has a user
 		props.alreadyLogged()
+		// set the rest of the user data 
 		props.setData()
+		// after that get the expenses
+		props.setExpenses()
 	}, [])
 
 	const handleLogin = async () => {
@@ -75,7 +79,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
 	alreadyLogged,
 	logIn,
-	setData
+	setData,
+	setExpenses
 }
 
 export default 

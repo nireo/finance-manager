@@ -12,8 +12,10 @@ const Settings = (props) => {
         <Container text>
             <Header as="h1">Settings</Header>
             <Segment>
+                <label>Username</label>
                 username: {props.userData.allInfo[0].username} <Label as="a">edit</Label>
-                name: {props.userData.allInfo[0].name} <Label as="a">edit</Label>
+                <label>Name</label>
+                {props.userData.allInfo[0].name} <Label as="a">edit</Label>
             </Segment>
         </Container>
     )

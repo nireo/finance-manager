@@ -6,8 +6,9 @@ import ExpenseForm from "./ExpenseForm"
 import Chart from "./Chart"
 import List from "./List"
 import userService from "../services/user"
-import { newExpense, setData } from "../reducers/allUserInfoReducer"
+import { setData } from "../reducers/allUserInfoReducer"
 import Notification from "./Notification"
+import expenseService from "../services/expenseService"
 
 const Expenses = (props) => {
     const [ title, setTitle ] = useState('')
@@ -16,14 +17,20 @@ const Expenses = (props) => {
     const [ page, setPage ] = useState("List")
     const [ graphPage, setGraphPage ] = useState("Doughnut")
     const [ message, setMessage ] = useState(null)
-    if (props.allUserData === null) {
+
+    // check if expenses are there and if not don't render the component
+    if (props.expenses === null) {
         return null
     } 
-    const expenses = props.allUserData.allInfo[0].expenses
+
+    // prevent strain :)
+    const expenses = props.expenses
+    // these are for the data distrubuted to the graph vie
     const allLabels = expenses.map(expense => expense.title)
     const allValues = expenses.map(expense => expense.value)    
     const allColors = expenses.map(expense => expense.color)
 
+    // the data template that chart.js uses
     const data = {
         labels: allLabels,
         datasets: [
@@ -35,16 +42,19 @@ const Expenses = (props) => {
         ]
     }
 
+    // settings the main page List, Chart and Create
     const toPage = (page) => (event) => {
         event.preventDefault()
         setPage(page)
     }
 
+    // same as above but its for the chart view
     const toGraphPage = (page) => (event) => {
         event.preventDefault()
         setGraphPage(page)
     }
 
+    // depending on what the page selected is display the correct content
     const renderPageContent = () => {
         if (page === "List") {
             return <List removeExpense={removeExpense} />
@@ -92,7 +102,6 @@ const Expenses = (props) => {
             color: `${color}`
         }
         // make the call to the backend
-        props.newExpense(newObject)
         setMessage("The new expense can be found in the expense tab")
         // called a setTimeout since i want to show notification just for 3 seconds
         setTimeout(() => {
@@ -137,8 +146,9 @@ const Expenses = (props) => {
 const mapStateToProps = (state) => {
     return {
         user: state.user,
-        allUserData: state.userData
+        allUserData: state.userData,
+        expenses: state.expenses
     }
 }
 
-export default connect(mapStateToProps, { newExpense, setData })(Expenses)
+export default connect(mapStateToProps, {  setData })(Expenses)
