@@ -5,10 +5,9 @@ import { connect } from "react-redux"
 import ExpenseForm from "./ExpenseForm"
 import Chart from "./Chart"
 import List from "./List"
-import userService from "../services/user"
-import { setData } from "../reducers/allUserInfoReducer"
 import Notification from "./Notification"
 import expenseService from "../services/expenseService"
+import { newExpense, setExpenses } from "../reducers/expenseReducer"
 
 const Expenses = (props) => {
     const [ title, setTitle ] = useState('')
@@ -103,6 +102,8 @@ const Expenses = (props) => {
         }
         // make the call to the backend
         setMessage("The new expense can be found in the expense tab")
+        props.newExpense(newObject)
+        props.setExpenses()
         // called a setTimeout since i want to show notification just for 3 seconds
         setTimeout(() => {
             setMessage(null)
@@ -113,8 +114,8 @@ const Expenses = (props) => {
         const toBeRemovedExpense = await expenses.find(expense => expense._id)
         // ask confirmation since i don't want any accidents to occur
         if (window.confirm(`are you sure you want to remove ${toBeRemovedExpense.title}`)) {
-            await userService.deleteExpense(toBeRemovedExpense._id)
-            props.setData()
+            await expenseService.deleteExpense(toBeRemovedExpense._id)
+            props.Expenses()
         }
     }
 
@@ -151,4 +152,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {  setData })(Expenses)
+export default connect(mapStateToProps, { setExpenses, newExpense })(Expenses)
