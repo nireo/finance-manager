@@ -15,7 +15,7 @@ const Chart = (props) => {
                     300
                 ],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.6)',
+                    '#ff0000',
                     'rgba(54, 162, 235, 0.6)',
                     'rgba(255, 206, 86, 0.6)',
                     'rgba(75, 192, 192, 0.6)',
@@ -35,7 +35,7 @@ const Chart = (props) => {
                     500
                 ],
                 backgroundColor: [
-                    `rgba(${props.red}, ${props.green}, ${props.blue}, ${props.alpha})`,
+                    `${props.color}`,
                     'rgba(0, 0, 0, 0.5)'
                 ]
             }

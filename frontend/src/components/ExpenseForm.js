@@ -26,41 +26,10 @@ const ExpenseForm = (props) => {
     <Form.Group widths="equal">
         <Form.Input 
             fluid
-            label="Red"
-			value={props.red}
-			min="0"
-			max="255"
-			type="number"
-			onChange={({ target }) => props.setRed(target.value)}
+			      value={props.color}
+            type="color"
+            onChange={({ target }) => props.setColor(target.value)}
         />
-        <Form.Input 
-            fluid
-            label="Green"
-			value={props.green}
-			min="0"
-			max="255"
-			type="number"
-			onChange={({ target }) => props.setGreen(target.value)}
-        />
-        <Form.Input
-            fluid
-            label="Blue"
-            value={props.blue}
-            min="0"
-            max="255"
-            type="number"
-            onChange={({ target }) => props.setBlue(target.value)}
-        />
-		<Form.Input 
-			fluid
-			label="Aplha"
-			value={props.alpha}
-			min="0"
-			step="0.1"
-			max="1"
-			type="number"
-			onChange={({ target }) => props.setAlpha(target.value)}
-		/>
     </Form.Group>
 	<Button type="submit">Add expense</Button>
   </Form>)

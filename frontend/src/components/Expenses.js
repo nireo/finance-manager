@@ -4,18 +4,15 @@ import { Link } from "react-router-dom"
 import { connect } from "react-redux"
 import ExpenseForm from "./ExpenseForm"
 import Chart from "./Chart"
-import InfoCharts from "./InfoCharts"
 import List from "./List"
-import { newExpense } from "../reducers/allUserInfoReducer"
+import userService from "../services/user"
+import { newExpense, setData } from "../reducers/allUserInfoReducer"
 import Notification from "./Notification"
 
 const Expenses = (props) => {
     const [ title, setTitle ] = useState('')
     const [ value, setValue ] = useState('')
-    const [ red, setRed ] = useState(0)
-    const [ green, setGreen ] = useState(0)
-    const [ blue, setBlue ] = useState(0)
-    const [ alpha, setAlpha ] = useState(0)
+    const [ color, setColor ] = useState('#ff0000')
     const [ page, setPage ] = useState("List")
     const [ graphPage, setGraphPage ] = useState("Doughnut")
     const [ message, setMessage ] = useState(null)
@@ -50,7 +47,7 @@ const Expenses = (props) => {
 
     const renderPageContent = () => {
         if (page === "List") {
-            return <List />
+            return <List removeExpense={removeExpense} />
         } else if (page === 'Charts') {
             return (
                 <div>
@@ -68,12 +65,10 @@ const Expenses = (props) => {
                 <Header as="h2">Create new expense</Header>
                 <ExpenseForm 
                     title={ title } setTitle={ setTitle } value={ value } setValue={ setValue } 
-                    red={ red } setRed={ setRed } blue={ blue } setBlue={ setBlue }
-                    green={ green } setGreen={ setGreen } aplha={ alpha } setAlpha= { setAlpha }
-                    addExpense={ addExpense }
+                    color={color} setColor={setColor} addExpense={ addExpense }
                 />
                 <Header as="h3">Preview of custom color</Header>
-                <Chart type="form" alpha={alpha} red={red} green={green} blue={blue} />
+                <Chart type="form" color={color} />
             </div>)
         }
     }
@@ -94,7 +89,7 @@ const Expenses = (props) => {
             title: title,
             value: value,
             profit: false,
-            color: `rgba(${red}, ${green}, ${blue}, ${alpha})`
+            color: `${color}`
         }
         // make the call to the backend
         props.newExpense(newObject)
@@ -107,6 +102,11 @@ const Expenses = (props) => {
 
     const removeExpense = async id => {
         const toBeRemovedExpense = await expenses.find(expense => expense._id)
+        // ask confirmation since i don't want any accidents to occur
+        if (window.confirm(`are you sure you want to remove ${toBeRemovedExpense.title}`)) {
+            await userService.deleteExpense(toBeRemovedExpense._id)
+            props.setData()
+        }
     }
 
     if (props.user === null) {
@@ -141,4 +141,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { newExpense })(Expenses)
+export default connect(mapStateToProps, { newExpense, setData })(Expenses)

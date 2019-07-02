@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { logOut } from "../reducers/userReducer"
 
 const NavBar = (props) => {
+    console.log(props.user)
     return (
         <Container>
         <Menu fixed="top" >

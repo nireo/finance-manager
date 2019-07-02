@@ -13,7 +13,7 @@ const Settings = (props) => {
             <Header as="h1">Settings</Header>
             <Segment>
                 username: {props.userData.allInfo[0].username} <Label as="a">edit</Label>
-
+                name: {props.userData.allInfo[0].name} <Label as="a">edit</Label>
             </Segment>
         </Container>
     )

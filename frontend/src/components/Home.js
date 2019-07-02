@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import { Header, Container, Segment, Menu } from 'semantic-ui-react'
-import ExampleChart from "./ExampleCharts"
 import Chart from "./Chart"
 
 const Home = () => {
