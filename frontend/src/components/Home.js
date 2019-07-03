@@ -36,7 +36,7 @@ const Home = () => {
     } 
 
     return (
-        <Container>
+        <div>
             <Container text>
                 <Header as='h1'>Finance Manager</Header>
                 <p>
@@ -58,8 +58,9 @@ const Home = () => {
                     </Menu>
                     {renderExampleGraph()}
                 </Segment>
+
             </Container>
-        </Container>
+        </div>
     )
 }
 

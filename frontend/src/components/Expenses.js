@@ -6,8 +6,8 @@ import ExpenseForm from "./ExpenseForm"
 import Chart from "./Chart"
 import List from "./List"
 import Notification from "./Notification"
-import expenseService from "../services/expenseService"
 import { newExpense, setExpenses } from "../reducers/expenseReducer"
+import { Redirect } from "react-router-dom"
 
 const Expenses = (props) => {
     const [ title, setTitle ] = useState('')
@@ -19,7 +19,7 @@ const Expenses = (props) => {
 
     // check if expenses are there and if not don't render the component
     if (props.expenses === null) {
-        return null
+        return <Redirect to="/" />
     } 
 
     // prevent strain :)
@@ -56,7 +56,7 @@ const Expenses = (props) => {
     // depending on what the page selected is display the correct content
     const renderPageContent = () => {
         if (page === "List") {
-            return <List removeExpense={removeExpense} />
+            return <List />
         } else if (page === 'Charts') {
             return (
                 <div>
@@ -105,18 +105,13 @@ const Expenses = (props) => {
         props.newExpense(newObject)
         props.setExpenses()
         // called a setTimeout since i want to show notification just for 3 seconds
+        setTitle("")
+        setValue("")
+        setColor("#ff0000")
         setTimeout(() => {
             setMessage(null)
         }, 3000)
-    }
 
-    const removeExpense = async id => {
-        const toBeRemovedExpense = await expenses.find(expense => expense._id)
-        // ask confirmation since i don't want any accidents to occur
-        if (window.confirm(`are you sure you want to remove ${toBeRemovedExpense.title}`)) {
-            await expenseService.deleteExpense(toBeRemovedExpense._id)
-            props.Expenses()
-        }
     }
 
     if (props.user === null) {
@@ -127,8 +122,8 @@ const Expenses = (props) => {
     return (
         <Container text>
             <Notification type="success" message={message} />
-            <Header as="h1">Welcome {props.user.userJSON.name} to the expenses page</Header>
-            <p>On this page you can see and edit your expenses. More configuration for this page can be found in the settings tab (navigation bar) or directly <Link to="/settings">here</Link>.</p>
+            <Header as="h1">Welcome {props.user.name} to the expenses page</Header>
+            <p>On this page you can see and edit Your expenses. More configuration for this page can be found in the settings tab (navigation bar) or directly <Link to="/settings">here</Link>.</p>
             <div>
                 <Menu pointing secondary>
                     <Menu.Item name="List" active={page === "List"} onClick={toPage("List")} />

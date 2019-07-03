@@ -7,7 +7,9 @@ const LoginForm = (props) => (
         <Header as="h1">Log-in to your account</Header>
         <Form size="large" onSubmit={props.handleLogin}>
             <Form.Field>
-                <input 
+                <Form.Input
+                icon="user"
+                iconPosition="left"
                 placeholder="username" 
                 type="text"
                 value={props.username}
@@ -15,7 +17,9 @@ const LoginForm = (props) => (
                 />
             </Form.Field>
             <Form.Field>
-                <input 
+                <Form.Input
+                icon="lock"
+                iconPosition="left"
                 placeholder="password"
                 type="password"
                 value={props.password}

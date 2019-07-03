@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { logOut } from "../reducers/userReducer"
 
 const NavBar = (props) => {
-    console.log(props.user)
     return (
         <Container>
         <Menu fixed="top" >
@@ -26,7 +25,7 @@ const NavBar = (props) => {
                 {(props.user &&
                     <Menu.Menu position='right'>
                         <Menu.Item>
-                            <Dropdown text={props.user.userJSON.name} className='link item'>
+                            <Dropdown text={props.user.name} item simple>
                                 <Dropdown.Menu>
                                     <Dropdown.Item><Link style={{ color: 'black' }} to="/settings">Settings</Link></Dropdown.Item>
                                     <Dropdown.Item onClick={props.logOut}>Sign out</Dropdown.Item>

@@ -1,16 +1,19 @@
-import React from "react"
-import { Segment, Button, Header } from "semantic-ui-react"
+import React, { useState } from "react"
+import { Segment, Button, Header, Form } from "semantic-ui-react"
 import { connect } from "react-redux"
-import { deleteExpense } from "../reducers/expenseReducer"
+import { deleteExpense, setExpenses } from "../reducers/expenseReducer"
 
 const List = (props) => {
+    const [ showEdit, setShowEdit ] = useState(false)
     if (props.allUserData === null) {
         return null
     }
+
     const expenses = props.expenses
     const handleRemove = async expense => {
         if (window.confirm(`remove expense ${expense.title}`)) {
-            props.deleteExpense(expense.id)
+            props.deleteExpense(expense._id)
+            props.setExpenses()
         }
     }
     const printExpenses = expenses.map(expense => {
@@ -20,8 +23,8 @@ const List = (props) => {
         return <Segment>
             <Button.Group floated="right">
                 <Button as='a' onClick={() => handleRemove(expense)} >Remove</Button>
-                <Button as="a">Edit</Button>
-            </Button.Group> 
+                <Button as="a" onClick={() => setShowEdit(!showEdit)}>Edit</Button>
+            </Button.Group>
             {expense.title} | {expense.value} € 
             {(expense.reminders.length > 0 && 
             <ul>
@@ -46,4 +49,4 @@ const mapDispatchToProps = (state) => {
     }
 }
 
-export default connect(mapDispatchToProps, { deleteExpense })(List)
+export default connect(mapDispatchToProps, { deleteExpense, setExpenses })(List)

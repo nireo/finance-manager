@@ -7,7 +7,9 @@ const ExpenseForm = (props) => {
         	<Header as="h3">Basic info</Header>
     <Form.Group widths='equal'>
       	<Form.Input
-        	fluid
+          fluid
+          icon="text cursor"
+          iconPosition="left"
         	label='Title'
        	 	placeholder='title'
         	value={props.title}
@@ -15,6 +17,8 @@ const ExpenseForm = (props) => {
       	/>
       <Form.Input
         fluid
+        icon="dollar"
+        iconPosition="left"
         label='Value'
         placeholder='value'
         value={props.value}
@@ -31,7 +35,7 @@ const ExpenseForm = (props) => {
             onChange={({ target }) => props.setColor(target.value)}
         />
     </Form.Group>
-	<Button type="submit">Add expense</Button>
+	  <Button fluid type="submit">Add expense</Button>
   </Form>)
 }
 

@@ -1,7 +1,7 @@
 import expenseService from "../services/expenseService"
 import { SSL_OP_TLS_BLOCK_PADDING_BUG } from "constants";
 
-const reducer = (state = null, action) => {
+const reducer = (state = [], action) => {
     switch (action.type) {
         case 'SET_EXPENSES':
             return action.data
