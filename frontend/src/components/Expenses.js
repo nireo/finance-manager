@@ -121,7 +121,7 @@ const Expenses = (props) => {
 
     return (
         <Container text>
-            <Notification type="success" message={message} />
+            <Notification header="New expense has been added" type="success" message={message} />
             <Header as="h1">Welcome {props.user.name} to the expenses page</Header>
             <p>On this page you can see and edit Your expenses. More configuration for this page can be found in the settings tab (navigation bar) or directly <Link to="/settings">here</Link>.</p>
             <div>

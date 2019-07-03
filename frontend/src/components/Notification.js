@@ -11,7 +11,7 @@ const Notification = (props) => {
         return (
             <div>
                 <Message positive>
-                    <Message.Header>You added a new expense</Message.Header>
+                    <Message.Header>{props.header}</Message.Header>
                     <p>{props.message}</p>
                 </Message>
             </div>

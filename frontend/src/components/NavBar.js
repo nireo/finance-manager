@@ -19,16 +19,18 @@ const NavBar = (props) => {
                 )}
                 {(props.user &&
                     <Menu.Item link>
-                        <Link to="/expenses">expenses</Link>
+                        <Link to="/expenses"><Icon name="dollar" />expenses</Link>
                     </Menu.Item>    
                 )}
                 {(props.user &&
                     <Menu.Menu position='right'>
                         <Menu.Item>
+                            <Icon name="user" />
                             <Dropdown text={props.user.name} item simple>
                                 <Dropdown.Menu>
-                                    <Dropdown.Item><Link style={{ color: 'black' }} to="/settings">Settings</Link></Dropdown.Item>
-                                    <Dropdown.Item onClick={props.logOut}>Sign out</Dropdown.Item>
+                                    <Dropdown.Item><Link style={{ color: 'black' }}to="/expenses"><Icon name="dollar" />Expenses</Link></Dropdown.Item>
+                                    <Dropdown.Item><Icon name="settings" /><Link style={{ color: 'black' }} to="/settings">Settings</Link></Dropdown.Item>
+                                    <Dropdown.Item onClick={props.logOut}><Icon name="sign out"/>Sign out</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
                         </Menu.Item>
