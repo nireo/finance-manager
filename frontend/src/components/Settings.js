@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-import { Container, Segment, Header, Label } from "semantic-ui-react" 
+import { Container, Segment, Header, Label, Icon, Form } from "semantic-ui-react" 
 
 
 const Settings = (props) => {
@@ -10,12 +10,33 @@ const Settings = (props) => {
 
     return (
         <Container text>
-            <Header as="h1">Settings</Header>
+            <Header cas="h1"><Icon name="settings"/>
+                <Header.Content>Settings</Header.Content>
+                <Header.Subheader>Manage your user information</Header.Subheader>
+            </Header>
+
             <Segment>
+                <Header as="h3">User information</Header>
                 <Label>Username</Label>
-                username: {props.userData.allInfo[0].username} <Label as="a">edit</Label>
-                <label>Name</label>
-                {props.userData.allInfo[0].name} <Label as="a">edit</Label>
+                <p>{props.userData.allInfo[0].username}</p>
+                <Label>Name</Label>
+                <p>{props.userData.allInfo[0].name}</p>
+                <Label>Amount of expenses</Label>
+                <p>{props.userData.allInfo[0].expenses.length}</p>
+                <Segment>
+                    <Header as="h3">Edit user information</Header>
+                    <Form size="small">
+                        <Form.Field>
+                            <label>Name</label>
+                            <Form.Input
+                                icon="male"
+                                iconPosition="left"
+                                type="text"
+                            />
+                        </Form.Field>
+                        
+                    </Form>
+                </Segment>
             </Segment>
         </Container>
     )
