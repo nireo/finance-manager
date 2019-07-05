@@ -89,7 +89,7 @@ router.post("/", async (req, res, next) => {
             // monthly salary will be controlled from the frontend
             monthlySalary: 0,
             registerationDate: 
-            `${time.getHours()}:${time.getMinutes()} ${time.getDate()} ${time.getMonth()} ${time.getFullYear()}`,
+            `${time.getHours()}:${time.getMinutes()} ${time.getDate()}.${time.getMonth() + 1}.${time.getFullYear()}`,
             expenses: []
         })
         // save user 
@@ -102,27 +102,22 @@ router.post("/", async (req, res, next) => {
     }
 })
 
-// route for updating monthlySalary
+// route for updating name
 router.put("/:id", async (req, res, next) => {
-    const body = req.body
+    const { name } = req.body
     const token = getTokenFrom(req)
-    let newUser = {}
     try {
         const decodedToken = jwt.verify(token, process.env.SECRET) 
         if (!token || !decodedToken.id) {
             return res.status(401).json({ error: 'token missing or invalid' })
         }
-        // find the user which needs change
-        const user = await User.findById(decodedToken.id)
-        if (req.body.monthlySalary === undefined) {
-            // 5d126ea99d2ce51e50a9c902
-            newUser = { ...user, username: body.username}
-        } else {
-            newUser = { ...user, monthlySalary:  body.monthlySalary }
-        }
-
-        const changedUser = await User.findByIdAndUpdate(req.params.id, newUser, { new: true })
-        res.json(changedUser.toJSON())
+        const userToChange = await User.find({ _id: req.params.id })
+        // make the object with the new name
+        const updatedUser = {...userToChange, name: name }
+        // update the user
+        const saveUser = await User.findByIdAndUpdate(req.params.id, updatedUser, { new: true })
+        console.log(saveUser)
+        res.json(saveUser.toJSON())
     } catch (e) {
         next(e)
     }
