@@ -103,7 +103,7 @@ router.post("/", async (req, res, next) => {
 })
 
 // route for updating name
-router.put("/:id", async (req, res, next) => {
+router.put("/:id/name", async (req, res, next) => {
     const { name } = req.body
     const token = getTokenFrom(req)
     try {
@@ -116,8 +116,23 @@ router.put("/:id", async (req, res, next) => {
         const updatedUser = {...userToChange, name: name }
         // update the user
         const saveUser = await User.findByIdAndUpdate(req.params.id, updatedUser, { new: true })
-        console.log(saveUser)
         res.json(saveUser.toJSON())
+    } catch (e) {
+        next(e)
+    }
+})
+
+router.put("/:id/username", async (req, res, next) => {
+    const { username } = req.body
+    const token = getTokenFrom(req)
+    try {
+        const decodedToken = jwt.verify(token, process.env.SECRET)
+        if (!token || !decodedToken.td) {
+            return res.status(401).json({ error: 'token missing or invalid' })
+        }
+        const userToChange = await User.find({ _id: req.params.id })
+        const saveUser = await User.findByIdAndUpdate(req.params.id, {...userToChange, username: username}, { new: true })
+        res.json(saveUser.json())
     } catch (e) {
         next(e)
     }
