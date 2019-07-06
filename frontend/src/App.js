@@ -58,10 +58,16 @@ const App = (props) => {
 					<Redirect to="/"/>
 				}/> 
 				<Route exact path="/expenses" render={() => 
+					user !== null ?
 					<Expenses />
+					:
+					<Redirect to="/login" />
 				} />
 				<Route exact path="/settings" render={() => 
+					user !== null ?
 					<Settings />
+					:
+					<Redirect to="/login" />
 				} />
 			</Container>
 			</Router>

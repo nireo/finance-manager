@@ -1,6 +1,6 @@
 import React from "react"
 import { Menu, Container, Dropdown, Icon } from "semantic-ui-react"
-import { Link  } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { connect } from 'react-redux'
 import { logOut } from "../reducers/userReducer"
 
@@ -30,7 +30,9 @@ const NavBar = (props) => {
                                 <Dropdown.Menu>
                                     <Dropdown.Item><Link style={{ color: 'black' }}to="/expenses"><Icon name="dollar" />Expenses</Link></Dropdown.Item>
                                     <Dropdown.Item><Icon name="settings" /><Link style={{ color: 'black' }} to="/settings">Settings</Link></Dropdown.Item>
-                                    <Dropdown.Item onClick={props.logOut}><Icon name="sign out"/>Sign out</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => 
+                                        props.logOut()
+                                    }><Icon name="sign out"/>Sign out</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
                         </Menu.Item>

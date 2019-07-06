@@ -4,7 +4,6 @@ import { connect } from "react-redux"
 import { deleteExpense, setExpenses } from "../reducers/expenseReducer"
 
 const List = (props) => {
-    const [ showEdit, setShowEdit ] = useState(false)
     if (props.allUserData === null) {
         return null
     }
@@ -26,7 +25,14 @@ const List = (props) => {
     return (
         <div>
             <Header as="h2">List of expenses</Header>
-            {printExpenses}
+            {
+                 expenses.length > 0 ? (
+                     {printExpenses}
+                 ) : (
+                     <p>You need to add data</p>
+                 )
+            }
+
         </div>
     )
 }

@@ -15,7 +15,7 @@ const Chart = (props) => {
                     300
                 ],
                 backgroundColor: [
-                    '#ff0000',
+                    'rgba(255, 99, 132, 0.6)',
                     'rgba(54, 162, 235, 0.6)',
                     'rgba(255, 206, 86, 0.6)',
                     'rgba(75, 192, 192, 0.6)',
@@ -45,7 +45,13 @@ const Chart = (props) => {
     if (props.type === "main-doughnut") {
         return (
             <div>
-                <Doughnut data={props.data} options={{ maintainAspectRatio: false }} />
+                {
+                    props.data.datasets[0].data.length > 0 ? (
+                        <Doughnut data={props.data} options={{ maintainAspectRatio: false }} />
+                    ) : (
+                        <p>You need to add data</p>
+                    )
+                }
             </div>
         )
     }
@@ -53,7 +59,14 @@ const Chart = (props) => {
     if (props.type === "main-pie") {
         return (
             <div>
-                <Doughnut data={props.data} options={{ maintainAspectRatio: false }} />
+                {
+                    props.data.datasets[0].data.length > 0 ? (
+                        <Doughnut data={props.data} options={{ maintainAspectRatio: false }} />
+                    ) : (
+                        <p>You need to add data</p>
+                    )
+                }
+
             </div>
         )
     }
@@ -61,7 +74,13 @@ const Chart = (props) => {
     if (props.type === "main-bar") {
         return (
             <div>
-                <Doughnut data={props.data} options={{ maintainAspectRatio: false }} />
+                {
+                    props.data.datasets[0].data.length > 0 ? (
+                        <Doughnut data={props.data} options={{ maintainAspectRatio: false }} />
+                    ) : (
+                        <p>You need to add data</p>
+                    )
+                }
             </div>
         )
     }
