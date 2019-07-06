@@ -15,16 +15,16 @@ const ExpenseForm = (props) => {
         	value={props.title}
         	onChange={({ target }) => props.setTitle(target.value)}
       	/>
-      <Form.Input
-        fluid
-        icon="dollar"
-        iconPosition="left"
-        label='Value'
-        placeholder='value'
-        value={props.value}
-        onChange={({ target }) => props.setValue(target.value)}
-        type="number"
-      />
+        <Form.Input
+          fluid
+          icon="dollar"
+          iconPosition="left"
+          label='Value'
+          placeholder='value'
+          value={props.value}
+          onChange={({ target }) => props.setValue(target.value)}
+          type="number"
+        />
     </Form.Group>
     <Header as="h3">Choose color for graphs</Header>
     <Form.Group widths="equal">

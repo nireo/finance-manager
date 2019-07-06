@@ -1,5 +1,5 @@
 import React from "react"
-import { Button, Form, Header, Container } from "semantic-ui-react"
+import { Button, Form, Header, Container, Label } from "semantic-ui-react"
 
 const SignUpForm = (props) => {
     return (
@@ -28,7 +28,10 @@ const SignUpForm = (props) => {
                 </Form.Field>
                 <Form.Field>
                     <label>Password</label>
-                    <Form.Input 
+                    {
+                        props.password.length < 4 && <Label basic color="red" pointing="below">Password must be atleast 4 characters long</Label>
+                    }
+                    <Form.Input
                         icon="lock"
                         iconPosition="left"
                         type="password"
@@ -37,7 +40,14 @@ const SignUpForm = (props) => {
                     />
                 </Form.Field>
                 <div>
-                    <Button type="submit" >Sign up</Button>Already have an account?
+                    {
+                        props.password.length < 4 ? (
+                            <Button disabled>Sign up</Button>
+                        ) : (
+                            <Button type="submit" >Sign up</Button>
+                        )
+                    }
+                    Already have an account?
                     <a onClick={() => props.setShowLogin(!props.showLogin) }> Login</a>
                 </div>
             </Form>

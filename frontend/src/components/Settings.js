@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { connect } from "react-redux"
-import { Container, Segment, Header, Label, Icon, Form, Menu } from "semantic-ui-react" 
+import { Container, Segment, Header, Label, Icon, Menu } from "semantic-ui-react" 
 import userService from "../services/user"
 import SettingForm from "./SettingForm"
 
@@ -56,9 +56,9 @@ const Settings = (props) => {
                     </Menu>
                     {
                         page === "Name" ? (
-                            <SettingForm icon="male" label="Name"value={name} setValue={setName} />
+                            <SettingForm update={updateProfile} icon="male" label="Name"value={name} setValue={setName} />
                         ) : (
-                            <SettingForm icon="user" label="Username" value={username} setValue={username} />
+                            <SettingForm update={updateProfile} icon="user" label="Username" value={username} setValue={setUsername} />
                         )
                     }
                    

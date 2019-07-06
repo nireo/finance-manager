@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Segment, Button, Header, Form } from "semantic-ui-react"
+import { Segment, Button, Header } from "semantic-ui-react"
 import { connect } from "react-redux"
 import { deleteExpense, setExpenses } from "../reducers/expenseReducer"
 
@@ -17,19 +17,9 @@ const List = (props) => {
         }
     }
     const printExpenses = expenses.map(expense => {
-        const allReminders = expense.reminders.map(reminder => {
-            return <li>{reminder}</li>
-        })
-        return <Segment>
-            <Button.Group floated="right">
-                <Button as='a' onClick={() => handleRemove(expense)} >Remove</Button>
-                <Button as="a" onClick={() => setShowEdit(!showEdit)}>Edit</Button>
-            </Button.Group>
+        return <Segment key={expense._id}>
+            <Button floated="right" as='a' onClick={() => handleRemove(expense)} >Remove</Button>
             {expense.title} | {expense.value} € 
-            {(expense.reminders.length > 0 && 
-            <ul>
-                {allReminders}
-            </ul>)}
             <p><strong>Created: {expense.time}</strong></p>
         </Segment>    
     })
@@ -38,7 +28,6 @@ const List = (props) => {
             <Header as="h2">List of expenses</Header>
             {printExpenses}
         </div>
-
     )
 }
 
