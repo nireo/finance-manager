@@ -1,36 +1,30 @@
-// import needed modules
-const express = require("express")
-const mongoose = require("mongoose")
-const cors = require("cors")
-const bodyParser = require("body-parser")
-const config = require("./utils/config")
-const userRouter = require("./controllers/users")
-const app = express()
-const expenseRouter = require("./controllers/expense")
-const loginRouter = require("./controllers/login")
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const userRouter = require('./controllers/users');
+const app = express();
+const expenseRouter = require('./controllers/expense');
+const loginRouter = require('./controllers/login');
+const {
+  connectToDatabase,
+  requestLog,
+  unknownEndpoint,
+  errorHandler
+} = require('./utils/middleware');
 mongoose.set('useFindAndModify', false);
 
-// display message
-console.log("connecting to mongodb")
-mongoose.connect(config.MONGODB_URI, {useNewUrlParser: true})
-    .then(() => {
-        // successfully connected
-        console.log("connected to mongodb")
-    })
-    .catch(e => {
-        // error happens
-        console.log("something went wrong", e)
-    })
+connectToDatabase();
 
 // make app use bodyParser
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 // make app use Cross-origin resource sharing
-app.use(cors())
+app.use(cors());
 
 // define other routers
-app.use("/api/users", userRouter)
-app.use("/api/expenses", expenseRouter)
-app.use("/api/login", loginRouter)
+app.use('/api/users', userRouter);
+app.use('/api/expenses', expenseRouter);
+app.use('/api/login', loginRouter);
 
-module.exports = app
+module.exports = app;

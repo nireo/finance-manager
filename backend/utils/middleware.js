@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken');
-const config = require(config);
+const config = require('./config');
 
 const errorHandler = (error, req, res, next) => {
   if (error.name === 'CastError' && error.kind === 'ObjectId') {
@@ -47,7 +46,7 @@ const getToken = req => {
 
 const connectToDatabase = () => {
   mongoose
-    .connect(config.MONGO_URI, { useNewUrlParser: true })
+    .connect(config.MONGODB_URI, { useNewUrlParser: true })
     .then(() => {
       console.log('successfully connected to database (mongoDb)');
     })
