@@ -36,10 +36,9 @@ export const logIn = credentials => {
     if (userInfo === 'invalid username or password') {
       return null;
     }
-    // store the user in the windows localStorage
     window.localStorage.setItem('loggedUser', JSON.stringify(userInfo));
-    // set token for requesting expenses and outher data
     userService.setToken(userInfo.token);
+    expenseService.setToken(userInfo.token);
 
     dispatch({
       type: 'LOG_IN',

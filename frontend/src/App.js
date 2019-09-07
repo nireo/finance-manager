@@ -9,7 +9,13 @@ import { setExpenses } from './reducers/expenseReducer';
 import { setData } from './reducers/allUserInfoReducer';
 import { Container } from 'semantic-ui-react';
 import Settings from './components/Settings';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch
+} from 'react-router-dom';
+import './components/styles.css';
 
 const App = props => {
   const [username, setUsername] = useState('');
@@ -19,11 +25,7 @@ const App = props => {
   useEffect(() => {
     // first check if localStorage has a user
     props.alreadyLogged();
-    // set the rest of the user data
-    props.setData();
-    // after that get the expenses
-    props.setExpenses();
-  }, []);
+  }, [props]);
 
   const handleLogin = async () => {
     // make the 2 strings into an object
@@ -40,40 +42,42 @@ const App = props => {
         <div>
           <NavBar user={user} />
         </div>
-        <Container style={{ marginTop: '7em' }}>
-          <Route exact path="/" render={() => <Home />} />
-          <Route
-            exact
-            path="/login"
-            render={() =>
-              user === null ? (
-                <LoginForm
-                  handleLogin={handleLogin}
-                  username={username}
-                  setUsername={setUsername}
-                  password={password}
-                  setPassword={setPassword}
-                />
-              ) : (
-                <Redirect to="/" />
-              )
-            }
-          />
-          <Route
-            exact
-            path="/expenses"
-            render={() =>
-              user !== null ? <Expenses /> : <Redirect to="/login" />
-            }
-          />
-          <Route
-            exact
-            path="/settings"
-            render={() =>
-              user !== null ? <Settings /> : <Redirect to="/login" />
-            }
-          />
-        </Container>
+        <Switch>
+          <Container style={{ marginTop: '7em' }}>
+            <Route exact path="/" render={() => <Home />} />
+            <Route
+              exact
+              path="/login"
+              render={() =>
+                user === null ? (
+                  <LoginForm
+                    handleLogin={handleLogin}
+                    username={username}
+                    setUsername={setUsername}
+                    password={password}
+                    setPassword={setPassword}
+                  />
+                ) : (
+                  <Redirect to="/" />
+                )
+              }
+            />
+            <Route
+              exact
+              path="/expenses"
+              render={() =>
+                user !== null ? <Expenses /> : <Redirect to="/login" />
+              }
+            />
+            <Route
+              exact
+              path="/settings"
+              render={() =>
+                user !== null ? <Settings /> : <Redirect to="/login" />
+              }
+            />
+          </Container>
+        </Switch>
       </Router>
     </Container>
   );

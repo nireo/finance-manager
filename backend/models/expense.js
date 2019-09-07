@@ -7,8 +7,7 @@ const uniqueValidator = require('mongoose-unique-validator');
 const ExpenseSchema = new Schema({
   title: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   value: {
     type: Number,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Header, Menu, Segment } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -7,7 +7,7 @@ import Chart from './Chart';
 import List from './List';
 import Notification from './Notification';
 import { newExpense, setExpenses } from '../reducers/expenseReducer';
-import { Redirect } from 'react-router-dom';
+import Loading from './Loading';
 
 const Expenses = props => {
   const [title, setTitle] = useState('');
@@ -17,14 +17,16 @@ const Expenses = props => {
   const [graphPage, setGraphPage] = useState('Doughnut');
   const [message, setMessage] = useState(null);
 
-  console.log(props.expenses);
+  useEffect(() => {
+    if (props.expenses === null) {
+      props.setExpenses();
+    }
+  }, [props]);
 
-  // check if expenses are there and if not don't render the component
   if (props.expenses === null) {
-    return null;
+    return <Loading />;
   }
 
-  // prevent strain :)
   const expenses = props.expenses;
   // these are for the data distrubuted to the graph vie
   const allLabels = expenses.map(expense => expense.title);
@@ -133,11 +135,6 @@ const Expenses = props => {
       setMessage(null);
     }, 3000);
   };
-
-  if (props.user === null) {
-    // this is to fix the error if the user hasn't logged in but on this page
-    return null;
-  }
 
   return (
     <Container text>

@@ -3,7 +3,6 @@ const baseUrl = '/api/users';
 
 let token = null;
 
-// turn the token into the bearer format which the backend accepts
 const setToken = newToken => {
   token = `bearer ${newToken}`;
 };
@@ -11,8 +10,6 @@ const setToken = newToken => {
 const getConfig = () => ({
   headers: { Authorization: token }
 });
-
-// get the specific info from an user
 const getAll = async () => {
   const response = await axios.get(baseUrl, getConfig());
   return response.data;

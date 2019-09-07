@@ -1,5 +1,3 @@
-// this reducer acidentally turned mostly for expenses, but I don't want to
-// go through the hassle of renaming everything
 import userService from '../services/user';
 
 const reducer = (state = null, action) => {

@@ -111,7 +111,6 @@ router.delete('/:id', async (req, res, next) => {
 router.post('/:id/reminders', async (req, res, next) => {
   const token = getToken(req);
   const { reminder } = req.body;
-  // give a status 400 no content if the post request doesn't include a reminder
   if (!reminder) {
     return res.status(400).json({ error: 'no content, or wrong content' });
   }
