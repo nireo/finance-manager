@@ -2,32 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { Container, Header, Menu, Segment } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import ExpenseForm from './ExpenseForm';
-import Chart from './Chart';
-import List from './List';
 import Notification from './Notification';
 import { newExpense, setExpenses } from '../reducers/expenseReducer';
 import Loading from './Loading';
+import ListExpenses from './ListExpenses';
+import CreatePage from './CreatePage';
+import ChartPage from './ChartPage';
 
 const Expenses = props => {
   const [title, setTitle] = useState('');
   const [value, setValue] = useState('');
   const [color, setColor] = useState('#ff0000');
   const [page, setPage] = useState('List');
-  const [graphPage, setGraphPage] = useState('Doughnut');
   const [message, setMessage] = useState(null);
 
-  useEffect(() => {
-    if (props.expenses === null) {
-      props.setExpenses();
-    }
-  }, [props]);
-
-  if (props.expenses === null) {
+  if (props.user === null) {
     return <Loading />;
   }
 
-  const expenses = props.expenses;
+  const expenses = props.user.expenses;
   // these are for the data distrubuted to the graph vie
   const allLabels = expenses.map(expense => expense.title);
   const allValues = expenses.map(expense => expense.value);
@@ -45,51 +38,42 @@ const Expenses = props => {
     ]
   };
 
-  // settings the main page List, Chart and Create
   const toPage = page => event => {
     event.preventDefault();
     setPage(page);
   };
 
-  // same as above but its for the chart view
-  const toGraphPage = page => event => {
-    event.preventDefault();
-    setGraphPage(page);
+  const clearFields = () => {
+    setTitle('');
+    setValue('');
+    setColor('#ff0000');
   };
 
-  // depending on what the page selected is display the correct content
-  const renderPageContent = () => {
-    if (page === 'List') {
-      return <List />;
-    } else if (page === 'Charts') {
-      return (
-        <div>
-          <Header as="h2">Expenses graph view</Header>
-          <Menu pointing secondary>
-            <Menu.Item
-              name="Doughnut"
-              active={graphPage === 'Doughnut'}
-              onClick={toGraphPage('Doughnut')}
-            />
-            <Menu.Item
-              name="Pie"
-              active={graphPage === 'Pie'}
-              onClick={toGraphPage('Pie')}
-            />
-            <Menu.Item
-              name="Bar"
-              active={graphPage === 'Bar'}
-              onClick={toGraphPage('Bar')}
-            />
-          </Menu>
-          {renderChartContent()}
-        </div>
-      );
-    } else if (page === 'Create') {
-      return (
-        <div>
-          <Header as="h2">Create new expense</Header>
-          <ExpenseForm
+  const addExpense = () => {
+    const newObject = {
+      title: title,
+      value: value,
+      profit: false,
+      color: `${color}`
+    };
+    setMessage('The new expense can be found in the expense tab');
+    props.newExpense(newObject);
+    props.setExpenses();
+    clearFields();
+    setTimeout(() => {
+      setMessage(null);
+    }, 3000);
+  };
+
+  const renderPages = () => {
+    switch (page) {
+      case 'List':
+        return <ListExpenses />;
+      case 'Charts':
+        return <ChartPage data={data} />;
+      case 'Create':
+        return (
+          <CreatePage
             title={title}
             setTitle={setTitle}
             value={value}
@@ -98,42 +82,10 @@ const Expenses = props => {
             setColor={setColor}
             addExpense={addExpense}
           />
-          <Header as="h3">Preview of custom color</Header>
-          <Chart type="form" color={color} />
-        </div>
-      );
+        );
+      default:
+        return null;
     }
-  };
-
-  const renderChartContent = () => {
-    if (graphPage === 'Doughnut') {
-      return <Chart type="main-doughnut" data={data} />;
-    } else if (graphPage === 'Pie') {
-      return <Chart type="main-pie" data={data} />;
-    } else if (graphPage === 'Bar') {
-      return <Chart type="main-bar" data={data} />;
-    }
-  };
-
-  const addExpense = () => {
-    // but all values into an object so that sending it is a lot easier
-    const newObject = {
-      title: title,
-      value: value,
-      profit: false,
-      color: `${color}`
-    };
-    // make the call to the backend
-    setMessage('The new expense can be found in the expense tab');
-    props.newExpense(newObject);
-    props.setExpenses();
-    // called a setTimeout since i want to show notification just for 3 seconds
-    setTitle('');
-    setValue('');
-    setColor('#ff0000');
-    setTimeout(() => {
-      setMessage(null);
-    }, 3000);
   };
 
   return (
@@ -168,7 +120,7 @@ const Expenses = props => {
           />
         </Menu>
       </div>
-      <Segment>{renderPageContent()}</Segment>
+      <Segment>{renderPages()}</Segment>
     </Container>
   );
 };

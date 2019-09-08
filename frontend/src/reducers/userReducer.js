@@ -22,7 +22,7 @@ export const alreadyLogged = () => {
       expenseService.setToken(userJSON.token);
       dispatch({
         type: 'LOG_IN',
-        data: userJSON
+        data: userJSON.user
       });
     }
   };
@@ -42,7 +42,7 @@ export const logIn = credentials => {
 
     dispatch({
       type: 'LOG_IN',
-      data: userInfo
+      data: userInfo.user
     });
   };
 };
