@@ -15,18 +15,23 @@ const Expenses = props => {
   const [color, setColor] = useState('#ff0000');
   const [page, setPage] = useState('List');
   const [message, setMessage] = useState(null);
+  const [allLabels, setAllLabels] = useState([]);
+  const [allColors, setAllColors] = useState([]);
+  const [allValues, setAllValues] = useState([]);
+
+  useEffect(() => {
+    if (props.user !== null) {
+      if (allLabels === [] && allColors === [] && allValues === []) {
+        setAllColors(props.user.expenses.map(expense => expense.color));
+        setAllLabels(props.user.expenses.map(expense => expense.title));
+        setAllValues(props.user.expenses.map(expense => expense.value));
+      }
+    }
+  }, [props, allColors, allValues, allLabels]);
 
   if (props.user === null) {
     return <Loading />;
   }
-
-  const expenses = props.user.expenses;
-  // these are for the data distrubuted to the graph vie
-  const allLabels = expenses.map(expense => expense.title);
-  const allValues = expenses.map(expense => expense.value);
-  const allColors = expenses.map(expense => expense.color);
-
-  // the data template that chart.js uses
   const data = {
     labels: allLabels,
     datasets: [
@@ -120,7 +125,7 @@ const Expenses = props => {
           />
         </Menu>
       </div>
-      <Segment>{renderPages()}</Segment>
+      <Segment>{}</Segment>
     </Container>
   );
 };
